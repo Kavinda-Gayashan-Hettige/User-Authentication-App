@@ -43,17 +43,39 @@ public class LoginFormController {
 //        }
 //    }
 @FXML
+
 void btnLoginOnAction() {
-    try {
-        boolean success = userService.login(
-                txtUserName.getText(),
-                txtPassword.getText()
+
+    String username = txtUserName.getText();
+    String password = txtPassword.getText();
+
+
+    if (!isValidGmail(username)) {
+        System.out.println("Username must end with @gmail.com");
+        return;
+    }
+
+
+    if (!isStrongPassword(password)) {
+        System.out.println(
+                "Password must contain:\n" +
+                        "- Min 8 characters\n" +
+                        "- Uppercase & Lowercase letters\n" +
+                        "- Number\n" +
+                        "- Special character"
         );
+        return;
+    }
+
+    try {
+
+        boolean success = userService.login(username, password);
 
         if (success) {
             System.out.println("Login success");
+            loginToDashBoard();
         } else {
-            System.out.println("Invalid credentials");
+            System.out.println("Invalid username or password");
         }
 
     } catch (Exception e) {
@@ -62,7 +84,27 @@ void btnLoginOnAction() {
 }
 
 
+    private boolean isValidGmail(String email) {
+        return email != null && email.matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$");
+    }
 
-    public void btnSignUpOnAction(ActionEvent actionEvent) {
+    private boolean isStrongPassword(String password) {
+        return password != null &&
+                password.matches(
+                        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
+                );
+    }
+
+
+    public void btnSignUpOnAction(ActionEvent actionEvent) throws IOException {
+    Stage stage = new Stage();
+    stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/register_form.fxml"))));
+    stage.show();
+    }
+
+    public void loginToDashBoard() throws IOException {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dash_board_form.fxml"))));
+        stage.show();
     }
 }

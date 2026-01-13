@@ -15,7 +15,7 @@
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#023e8a" height="62.0" stroke="#023e8a" strokeType="INSIDE" width="732.0" />
         <ImageView fitHeight="393.0" fitWidth="594.0" layoutX="71.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@image/authentication-header.jpg" />
+                <Image url="@../image/authentication-header.jpg" />
             </image>
         </ImageView>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00fffb" height="200.0" layoutX="338.0" layoutY="194.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="329.0" />
