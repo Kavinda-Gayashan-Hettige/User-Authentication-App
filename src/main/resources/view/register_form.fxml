@@ -10,13 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane"
-            prefHeight="400.0"
-            prefWidth="600.0"
-            stylesheets="@/CSS/style.css"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.RegisterFormController">
+<AnchorPane fx:id="mainPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@/CSS/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterFormController">
 
    <children>
       <ImageView fitHeight="563.0" fitWidth="838.0" layoutX="-5.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
@@ -35,6 +29,7 @@
             <JFXPasswordField fx:id="txtPassword" layoutX="61.0" layoutY="130.0" prefWidth="300" promptText="Password" styleClass="textField" />
             <JFXPasswordField fx:id="txtConfirmPassword" layoutX="61.0" layoutY="180.0" prefWidth="300" promptText="Confirm Password" styleClass="textField" />
             <Button layoutX="166.0" layoutY="256.0" onAction="#btnRegisterOnAction" prefWidth="100" styleClass="btn4" stylesheets="@../CSS/style.css" text="Register" />
+            <Button fx:id="btnlogin" layoutX="294.0" layoutY="256.0" onAction="#btnloginOnAction" prefWidth="100" styleClass="btn4" stylesheets="@../CSS/style.css" text="to Login Page" />
          </children>
       </Pane>
    </children>

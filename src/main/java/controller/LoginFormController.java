@@ -4,8 +4,9 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import service.UserService;
@@ -28,60 +29,52 @@ public class LoginFormController {
 
     private final UserService userService = new UserService();
 
-//    @FXML
-//    void btnLoginOnAction(ActionEvent event) throws IOException {
-//
-//        if (txtUserName.getText().equals("kavinda") && txtPassword.getText().equals("1234")) {
-//            Stage stage = new Stage();
-//            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/dash_board_form.fxml"))));
-//            stage.show();
-//
-//
-//        } else {
-//            new Alert(Alert.AlertType.WARNING, "Invalid Username or Password. Try again!!").show();
-//
-//        }
-//    }
-@FXML
 
-void btnLoginOnAction() {
+    @FXML
+    void btnLoginOnAction() {
+        String username = txtUserName.getText();
+        String password = txtPassword.getText();
 
-    String username = txtUserName.getText();
-    String password = txtPassword.getText();
-
-
-    if (!isValidGmail(username)) {
-        System.out.println("Username must end with @gmail.com");
-        return;
-    }
-
-
-    if (!isStrongPassword(password)) {
-        System.out.println(
-                "Password must contain:\n" +
-                        "- Min 8 characters\n" +
-                        "- Uppercase & Lowercase letters\n" +
-                        "- Number\n" +
-                        "- Special character"
-        );
-        return;
-    }
-
-    try {
-
-        boolean success = userService.login(username, password);
-
-        if (success) {
-            System.out.println("Login success");
-            loginToDashBoard();
-        } else {
-            System.out.println("Invalid username or password");
+        if (!isValidGmail(username)) {
+            System.out.println("Username must end with @gmail.com");
+            return;
         }
 
-    } catch (Exception e) {
-        e.printStackTrace();
+        if (!isStrongPassword(password)) {
+            System.out.println("Password requirements not met");
+            return;
+        }
+
+        try {
+            boolean success = userService.login(username, password);
+
+            if (success) {
+                System.out.println("Login success");
+
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dash_board_form.fxml"));
+                Parent root = loader.load();
+
+
+                DashBoardFormController controller = loader.getController();
+                controller.setUserName(username);
+
+
+                Stage currentStage = (Stage) btnLogin.getScene().getWindow();
+                currentStage.close();
+
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } else {
+                System.out.println("Invalid username or password");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 
 
     private boolean isValidGmail(String email) {

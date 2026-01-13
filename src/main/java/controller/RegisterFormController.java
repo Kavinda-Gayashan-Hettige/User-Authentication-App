@@ -1,16 +1,25 @@
 package controller;
 
-
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import service.UserService;
+
+import java.io.IOException;
 
 public class RegisterFormController {
 
     public AnchorPane mainPane;
+    public Button btnlogin;
+
     @FXML
     private JFXTextField txtUsername;
 
@@ -23,7 +32,7 @@ public class RegisterFormController {
     private final UserService userService = new UserService();
 
     @FXML
-    void btnRegisterOnAction() {
+    void btnRegisterOnAction() throws Exception {
 
         String username = txtUsername.getText();
         String password = txtPassword.getText();
@@ -58,6 +67,7 @@ public class RegisterFormController {
             return;
         }
 
+
         try {
             boolean saved = userService.register(username, password);
 
@@ -66,6 +76,10 @@ public class RegisterFormController {
                         "Success",
                         "Registration successful 🎉");
                 clearFields();
+
+
+
+
             } else {
                 showAlert(Alert.AlertType.ERROR,
                         "Error",
@@ -81,11 +95,11 @@ public class RegisterFormController {
     }
 
 
-
     private boolean isValidGmail(String email) {
         return email != null &&
                 email.matches("^[a-zA-Z0-9._%+-]+@gmail\\.com$");
     }
+
 
     private boolean isStrongPassword(String password) {
         return password != null &&
@@ -94,11 +108,13 @@ public class RegisterFormController {
                 );
     }
 
+
     private void clearFields() {
         txtUsername.clear();
         txtPassword.clear();
         txtConfirmPassword.clear();
     }
+
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
@@ -106,5 +122,11 @@ public class RegisterFormController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.show();
+    }
+
+    public void btnloginOnAction(ActionEvent actionEvent) throws IOException {
+        Stage stage =new Stage();
+        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/login_form.fxml"))));
+        stage.show();
     }
 }
